@@ -1,0 +1,16 @@
+<h1>Chores</h1>
+
+<table>
+  <tr>
+    <th>Chore</th>
+    <th>Notes</th>
+  </tr>
+
+  <% @chores.each do |chore| %>
+    <tr>
+      <td><%= chore.name %></td>
+      <td><%= chore.instructions %></td>
+      <td><%= link_to 'Show', chores_path(chore) %></td>
+    </tr>
+  <% end %>
+</table>
