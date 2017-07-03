@@ -1,3 +1,21 @@
 // Place all the styles related to the Chores controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+// Color scheme from https://www.behance.net/gallery/32154055/Minimalist-Color-Palettes-2015
+$yellow: #e5eec1;
+$green: #a2d4ab;
+$teal: #3eaca8;
+$blue: #547a82;
+$gray: #5a5050;
+$background-colors-light-to-dark: $yellow, $green, $teal, $blue, $gray;
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: $blue;
+  background: linear-gradient($background-colors-light-to-dark) fixed;
+}
+
+h1, th {
+  font-family: 'Josefin Sans', sans-serif;
+}
