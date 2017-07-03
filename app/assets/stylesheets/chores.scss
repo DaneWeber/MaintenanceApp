@@ -3,16 +3,17 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 // Color scheme from https://www.behance.net/gallery/32154055/Minimalist-Color-Palettes-2015
-$a-yellow: #e5eec1;
-$b-green: #a2d4ab;
-$c-teal: #3eaca8;
-$d-blue: #547a82;
-$e-gray: #5a5050;
+$yellow: #e5eec1;
+$green: #a2d4ab;
+$teal: #3eaca8;
+$blue: #547a82;
+$gray: #5a5050;
+$background-colors-light-to-dark: $yellow, $green, $teal, $blue, $gray;
 
 body {
   font-family: 'Roboto', sans-serif;
-  background-color: $d-blue;
-  background: linear-gradient($b-green, $c-teal, $d-blue, $e-gray) fixed;
+  background-color: $blue;
+  background: linear-gradient($background-colors-light-to-dark) fixed;
 }
 
 h1, th {
