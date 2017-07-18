@@ -1,6 +1,6 @@
 class ChoresController < ApplicationController
   def index
-    @chores = Chore.all
+    @chores = Chore.all.order(nextdue: :asc, updated_at: :asc)
   end
 
   def show
