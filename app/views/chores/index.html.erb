@@ -1,16 +1,25 @@
 <h1>Chores</h1>
 
+<p>== <%= link_to 'Add Chore', new_chore_path %> ==</p>
+
 <table>
   <tr>
     <th>Chore</th>
     <th>Notes</th>
+    <th>Interval</th>
+    <th>Last Done</th>
+    <th>Next Due</th>
+    <th></th>
   </tr>
 
   <% @chores.each do |chore| %>
-    <tr>
+    <tr class="due">
       <td><%= chore.name %></td>
       <td><%= chore.instructions %></td>
-      <td><%= link_to 'Show', chores_path(chore) %></td>
+      <td><%= chore.interval_days %></td>
+      <td><%= chore.lastdone %></td>
+      <td><%= chore.nextdue %></td>
+      <td><%= link_to 'Show', chore_path(chore) %></td>
     </tr>
   <% end %>
 </table>
