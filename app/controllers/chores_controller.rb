@@ -1,3 +1,5 @@
+require 'date'
+
 class ChoresController < ApplicationController
   def index
     @chores = Chore.all.order(nextdue: :asc, updated_at: :asc)
@@ -15,6 +17,14 @@ class ChoresController < ApplicationController
 
     @chore.save
     redirect_to @chore
+  end
+
+  def update
+    @chore = Chore.find(params[:id])
+    @chore.lastdone = Date.today
+    @chore.nextdue = @chore.lastdone + @chore.interval_days
+    @chore.save
+    redirect_to chores_path
   end
 
   private

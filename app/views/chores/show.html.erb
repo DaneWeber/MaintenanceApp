@@ -13,4 +13,16 @@
   <%= @chore.interval_days %>
 </p>
 
+<p>
+  <strong>Next due:</strong>
+  <%= @chore.nextdue %>
+</p>
+
+<%= link_to 'Cycle', chore_path, method: "patch" %>
+
+<p>
+  <strong>Last done:</strong>
+  <%= @chore.lastdone %>
+</p>
+
 <%= link_to 'Back', chores_path %>
