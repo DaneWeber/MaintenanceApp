@@ -21,9 +21,13 @@ class ChoresController < ApplicationController
 
   def update
     @chore = Chore.find(params[:id])
-    @chore.lastdone = Date.today
-    @chore.nextdue = @chore.lastdone + @chore.interval_days
-    @chore.save
+    if @chore.lastdone == Date.today && @chore.nextdue == Date.today + @chore.interval_days
+      @chore.touch
+    else
+      @chore.lastdone = Date.today
+      @chore.nextdue = @chore.lastdone + @chore.interval_days
+      @chore.save
+    end
     redirect_to chores_path
   end
 
