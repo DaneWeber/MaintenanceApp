@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170628025543) do
+ActiveRecord::Schema.define(version: 20170719134601) do
 
   create_table "chores", force: :cascade do |t|
     t.string "name"
@@ -20,7 +20,9 @@ ActiveRecord::Schema.define(version: 20170628025543) do
     t.datetime "updated_at", null: false
     t.date "lastdone"
     t.date "nextdue"
-    t.boolean "untouched"
+    t.datetime "cycle_reset"
+    t.index ["cycle_reset"], name: "index_chores_on_cycle_reset"
+    t.index ["nextdue"], name: "index_chores_on_nextdue"
   end
 
 end

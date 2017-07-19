@@ -2,7 +2,7 @@ require 'date'
 
 class ChoresController < ApplicationController
   def index
-    @chores = Chore.all.order(nextdue: :asc, updated_at: :asc)
+    @chores = Chore.all.order(nextdue: :asc, cycle_reset: :asc)
   end
 
   def show
@@ -11,6 +11,10 @@ class ChoresController < ApplicationController
 
   def new
   end
+
+  # def edit
+  #   @chore = Chore.find(params[:id])
+  # end
 
   def create
     @chore = Chore.new(chore_params)
@@ -21,10 +25,9 @@ class ChoresController < ApplicationController
 
   def update
     @chore = Chore.find(params[:id])
-    @chore.lastdone = Date.today
-    @chore.nextdue = @chore.lastdone + @chore.interval_days
-    @chore.updated_at = Time.now
-    @chore.save
+    @chore.update!({:lastdone => Date.today,
+                    :nextdue => Date.today + @chore.interval_days,
+                    :cycle_reset => Time.now})
     redirect_to chores_path
   end
 
