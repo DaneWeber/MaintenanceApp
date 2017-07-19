@@ -10,20 +10,35 @@ class ChoresController < ApplicationController
   end
 
   def new
+    @chore = Chore.new
   end
 
-  # def edit
-  #   @chore = Chore.find(params[:id])
-  # end
+  def edit
+    @chore = Chore.find(params[:id])
+  end
 
   def create
     @chore = Chore.new(chore_params)
 
-    @chore.save
-    redirect_to @chore
+    if @chore.save
+      redirect_to @chore
+    else
+      render 'new'
+    end
   end
 
   def update
+    @chore = Chore.find(params[:id])
+
+    if @chore.update(chore_params)
+      redirect_to @chore
+    else
+      render 'edit'
+    end
+  end
+
+# I need to create a new route for the reset_cycle method
+  def reset_cycle
     @chore = Chore.find(params[:id])
     @chore.update!({:lastdone => Date.today,
                     :nextdue => Date.today + @chore.interval_days,

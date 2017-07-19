@@ -18,7 +18,7 @@
   <%= @chore.nextdue %>
 </p>
 
-<%= link_to 'Cycle', chore_path, method: "patch" %>
+<%= link_to 'Cycle', reset_cycle_chore_path(chore), method: "patch" %>
 
 <p>
   <strong>Last done:</strong>
