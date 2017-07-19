@@ -1,5 +1,3 @@
-require 'date'
-
 class ChoresController < ApplicationController
   def index
     @chores = Chore.all.order(nextdue: :asc, cycle_reset: :asc)
