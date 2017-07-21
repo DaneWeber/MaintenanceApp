@@ -1,6 +1,6 @@
 class ChoresController < ApplicationController
   def index
-    @chores = Chore.all.order(nextdue: :asc, cycle_reset: :asc)
+    @chores = Chore.all.order(next_due: :asc, cycle_reset: :asc)
   end
 
   def show
@@ -35,12 +35,11 @@ class ChoresController < ApplicationController
     end
   end
 
-# I need to create a new route for the reset_cycle method
   def reset_cycle
     @chore = Chore.find(params[:id])
-    @chore.update!({:lastdone => Date.today,
-                    :nextdue => Date.today + @chore.interval_days,
-                    :cycle_reset => Time.now})
+    @chore.update!({last_done: Date.today,
+                    next_due: Date.today + @chore.interval_days,
+                    cycle_reset: Time.now})
     redirect_to chores_path
   end
 

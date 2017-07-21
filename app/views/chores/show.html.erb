@@ -15,14 +15,14 @@
 
 <p>
   <strong>Next due:</strong>
-  <%= @chore.nextdue %>
+  <%= @chore.next_due %>
 </p>
 
-<%= link_to 'Cycle', reset_cycle_chore_path(chore), method: "patch" %>
+<%= link_to 'Cycle', reset_cycle_chore_path(@chore), method: "patch" %>
 
 <p>
   <strong>Last done:</strong>
-  <%= @chore.lastdone %>
+  <%= @chore.last_done %>
 </p>
 
 <%= link_to 'Back', chores_path %>
