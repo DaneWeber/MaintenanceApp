@@ -1,6 +1,7 @@
-<h1>New Chore</h1>
+<h1>Edit Chore</h1>
 
-<%= form_for :chore, url: chores_path do |f| %>
+<%= form_for(@chore) do |f| %>
+
   <% if @chore.errors.any? %>
     <div id="error_explanation">
       <h2>
