@@ -12,6 +12,7 @@
     <th></th>
     <th></th>
     <th></th>
+    <th></th>
   </tr>
 
   <% @chores.each do |chore| %>
@@ -24,6 +25,9 @@
       <td><%= link_to 'Cycle', reset_cycle_chore_path(chore), method: "patch" %></td>
       <td><%= link_to 'Show', chore_path(chore) %></td>
       <td><%= link_to 'Edit', edit_chore_path(chore) %></td>
+      <td><%= link_to 'Delete', chore_path(chore),
+                                method: :delete,
+                                data: { confirm: "Do you want to delete the chore \"#{chore.name}\"?" } %></td>
     </tr>
   <% end %>
 </table>

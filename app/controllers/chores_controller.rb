@@ -43,6 +43,13 @@ class ChoresController < ApplicationController
     redirect_to chores_path
   end
 
+  def destroy
+    @chore = Chore.find(params[:id])
+    @chore.destroy
+
+    redirect_to chores_path
+  end
+
   private
     def chore_params
       params.require(:chore).permit(:name, :instructions, :interval_days)

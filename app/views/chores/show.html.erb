@@ -25,4 +25,10 @@
   <%= @chore.last_done %>
 </p>
 
+<p>
+  <%= link_to 'Delete', chore_path(@chore),
+                        method: :delete,
+                        data: { confirm: "Do you want to delete the chore \"#{@chore.name}\"?" } %>
+</p>
+
 <%= link_to 'Back', chores_path %>
