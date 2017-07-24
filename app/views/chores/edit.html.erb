@@ -1,38 +1,5 @@
 <h1>Edit Chore</h1>
 
-<%= form_for(@chore) do |f| %>
-
-  <% if @chore.errors.any? %>
-    <div id="error_explanation">
-      <h2>
-        <%= pluralize(@chore.errors.count, "error") %> prohibited this chore from being created:
-      </h2>
-      <ul>
-        <% @chore.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <p>
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </p>
-
-  <p>
-    <%= f.label :instructions %><br>
-    <%= f.text_area :instructions %>
-  </p>
-
-  <p>
-    <%= f.label :interval_days %><br>
-    <%= f.text_area :interval_days %>
-  </p>
-
-  <p>
-    <%= f.submit %>
-  </p>
-<% end %>
+<%= render "core_editable_fields" %>
 
 <%= link_to 'Back', chores_path %>
