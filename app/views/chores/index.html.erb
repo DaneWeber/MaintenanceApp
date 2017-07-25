@@ -16,7 +16,7 @@
   </tr>
 
   <% @chores.each do |chore| %>
-    <tr class="due">
+    <tr class="<%= chore.due %>">
       <td><%= chore.name %></td>
       <td><%= chore.instructions %></td>
       <td><%= chore.interval_days %></td>
