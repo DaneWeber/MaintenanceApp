@@ -20,6 +20,10 @@ h1, th {
   font-family: 'Josefin Sans', sans-serif;
 }
 
+.not-due {
+  background-color: $blue;
+}
+
 .overdue {
   background-color: $yellow;
 }
@@ -29,9 +33,9 @@ h1, th {
 }
 
 .due-week {
-  background-color: $teal
+  background-color: $teal;
 }
 
-.not-due {
-  background-color: $blue;
+.due-later {
+  background-color: $gray;
 }

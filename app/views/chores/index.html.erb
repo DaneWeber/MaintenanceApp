@@ -1,6 +1,6 @@
 <h1>Chores</h1>
 
-<p>== <%= link_to 'Add Chore', new_chore_path %> ==</p>
+<p><%= link_to 'Add Chore', new_chore_path %></p>
 
 <table>
   <tr>
@@ -16,7 +16,7 @@
   </tr>
 
   <% @chores.each do |chore| %>
-    <tr class="<%= chore.due %>">
+    <tr class="<%= chore.due_class %>">
       <td><%= chore.name %></td>
       <td><%= chore.instructions %></td>
       <td><%= chore.interval_days %></td>
