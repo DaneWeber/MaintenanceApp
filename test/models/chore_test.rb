@@ -91,6 +91,7 @@ class ChoreTest < ActiveSupport::TestCase
       test_chore.due_class(1.2345)
     end
   end
+
   test 'five day interval' do
     test_chore = Chore.new(interval_days: 5)
     assert_equal(5, test_chore.interval_days, 'Five day interval')
