@@ -37,9 +37,9 @@ class ChoresController < ApplicationController
 
   def reset_cycle
     @chore = Chore.find(params[:id])
-    @chore.update!({last_done: Date.today,
-                    next_due: Date.today + @chore.interval_days,
-                    cycle_reset: Time.now})
+    @chore.reset_cycle_date
+    @chore.save if @chore.persisted?
+
     redirect_to chores_path
   end
 

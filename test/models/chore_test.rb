@@ -91,4 +91,15 @@ class ChoreTest < ActiveSupport::TestCase
       test_chore.due_class(1.2345)
     end
   end
+  test 'five day interval' do
+    test_chore = Chore.new(interval_days: 5)
+    assert_equal(5, test_chore.interval_days, 'Five day interval')
+    assert_nil(test_chore.last_done, 'Unset last done')
+    assert_nil(test_chore.cycle_reset, 'Unset cycle date')
+    assert_nil(test_chore.next_due, 'Unset due date')
+    assert(test_chore.reset_cycle_date, 'expect success')
+    assert_equal(Date.today, test_chore.last_done, 'done today')
+    assert_in_delta(Time.now, test_chore.cycle_reset, 30, 'cycled just now')
+    assert_equal(Date.today + 5, test_chore.next_due, 'due in five')
+  end
 end

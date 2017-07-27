@@ -18,4 +18,12 @@ class Chore < ApplicationRecord
       'due-later'
     end
   end
+
+  def reset_cycle_date
+    self.last_done = Date.today
+    self.next_due = Date.today + self.interval_days
+    self.cycle_reset = Time.now
+    true
+  end
+
 end
