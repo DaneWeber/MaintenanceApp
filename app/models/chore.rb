@@ -28,7 +28,7 @@ class Chore < ApplicationRecord
     when calendar_days?
       self.next_due = Date.today + self.interval_days
     when business_days?
-      self.next_due = Date.today + self.interval_days
+      self.next_due = self.interval_days.business_day.from_now.to_date
     else
       return false
     end
