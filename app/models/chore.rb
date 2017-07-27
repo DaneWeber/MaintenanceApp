@@ -1,4 +1,6 @@
 class Chore < ApplicationRecord
+  enum interval_type: { calendar_days: 0, business_days: 1 }
+
   validates :name, presence: true
   validates :interval_days, numericality: { only_integer: true, greater_than: 0 }
 

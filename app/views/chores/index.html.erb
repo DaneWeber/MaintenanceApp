@@ -7,6 +7,7 @@
     <th>Chore</th>
     <th>Notes</th>
     <th>Interval</th>
+    <th>Type</th>
     <th>Last Done</th>
     <th>Next Due</th>
     <th></th>
@@ -20,6 +21,7 @@
       <td><%= chore.name %></td>
       <td><%= chore.instructions %></td>
       <td><%= chore.interval_days %></td>
+      <td><%= chore.interval_type.titleize %></td>
       <td><%= chore.last_done %></td>
       <td><%= chore.next_due %></td>
       <td><%= link_to 'Cycle', reset_cycle_chore_path(chore), method: "patch" %></td>
