@@ -1,0 +1,2 @@
+class OpenWeatherMap < ApplicationRecord
+end
