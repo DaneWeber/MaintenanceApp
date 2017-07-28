@@ -23,8 +23,15 @@ class Chore < ApplicationRecord
 
   def reset_cycle_date
     self.last_done = Date.today
-    self.next_due = Date.today + self.interval_days
     self.cycle_reset = Time.now
+    case
+    when calendar_days?
+      self.next_due = Date.today + self.interval_days
+    when business_days?
+      self.next_due = Date.today + self.interval_days
+    else
+      return false
+    end
     true
   end
 
