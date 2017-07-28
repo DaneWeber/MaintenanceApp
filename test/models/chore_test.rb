@@ -114,15 +114,31 @@ class ChoreTest < ActiveSupport::TestCase
     end
   end
 
-  test 'five day interval' do
-    t_chore = Chore.new(interval_days: 5)
-    assert_equal(5, t_chore.interval_days, 'Five day interval')
-    assert_nil(t_chore.last_done, 'Unset last done')
-    assert_nil(t_chore.cycle_reset, 'Unset cycle date')
-    assert_nil(t_chore.next_due, 'Unset due date')
-    assert(t_chore.reset_cycle_date, 'expect success')
-    assert_equal(Date.today, t_chore.last_done, 'done today')
-    assert_in_delta(Time.now, t_chore.cycle_reset, 30, 'cycled just now')
-    assert_equal(Date.today + 5, t_chore.next_due, 'due in five')
+  test 'five calendar day interval' do
+    cal_chore = Chore.new(interval_days: 5)
+    assert(cal_chore.calendar_days?, 'Default is calendar_days')
+    assert_equal(5, cal_chore.interval_days, 'Five day interval')
+    assert_nil(cal_chore.last_done, 'Unset last done')
+    assert_nil(cal_chore.cycle_reset, 'Unset cycle date')
+    assert_nil(cal_chore.next_due, 'Unset due date')
+    assert(cal_chore.reset_cycle_date, 'expect success')
+    assert_equal(Date.today, cal_chore.last_done, 'done today')
+    assert_in_delta(Time.now, cal_chore.cycle_reset, 30, 'cycled just now')
+
+    assert_equal(Date.today + 5, cal_chore.next_due, 'due in five')
+  end
+
+  test 'five business day interval' do
+    bus_chore = Chore.new(interval_days: 5, interval_type: 'business_days')
+    assert(bus_chore.business_days?, 'Explicitly set to business days')
+    assert_equal(5, bus_chore.interval_days, 'Five day interval')
+    assert_nil(bus_chore.last_done, 'Unset last done')
+    assert_nil(bus_chore.cycle_reset, 'Unset cycle date')
+    assert_nil(bus_chore.next_due, 'Unset due date')
+    assert(bus_chore.reset_cycle_date, 'expect success')
+    assert_equal(Date.today, bus_chore.last_done, 'done today')
+    assert_in_delta(Time.now, bus_chore.cycle_reset, 30, 'cycled just now')
+
+    assert_equal(Date.today + 7, bus_chore.next_due, 'due in five business days')
   end
 end

@@ -4,6 +4,21 @@ class Chore < ApplicationRecord
   validates :name, presence: true
   validates :interval_days, numericality: { only_integer: true, greater_than: 0 }
 
+  def reset_cycle_date
+    self.last_done = Date.today
+    self.cycle_reset = Time.now
+    case
+    when calendar_days?
+      self.next_due = Date.today + self.interval_days
+    when business_days?
+      self.next_due = self.add_business_days(start_date: Date.today, work_days: self.interval_days)
+    else
+      return false
+    end
+    true
+  end
+
+  # Functions
   def due_class(due_date = next_due)
     raise ArgumentError, 'nil or date required' unless due_date.instance_of?(Date) || due_date.nil?
 
@@ -19,20 +34,6 @@ class Chore < ApplicationRecord
     else
       'due-later'
     end
-  end
-
-  def reset_cycle_date
-    self.last_done = Date.today
-    self.cycle_reset = Time.now
-    case
-    when calendar_days?
-      self.next_due = Date.today + self.interval_days
-    when business_days?
-      self.next_due = Date.today + self.interval_days
-    else
-      return false
-    end
-    true
   end
 
   def add_business_days(start_date:, work_days:)
