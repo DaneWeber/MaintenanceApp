@@ -7,18 +7,29 @@ class ChoreTest < ActiveSupport::TestCase
 
   # Arrange
   t_chore = Chore.new
+  monday = Date.parse('2017-06-12')
 
   # Act
 
   # Assert
   test 'add_business_days' do
-    monday = Date.parse('2017-06-12')
-    assert_equal(monday, t_chore.add_business_days(start_date: monday, work_days: 0), 'Same business day')
+    assert_equal(monday + 1, t_chore.add_business_days(start_date: monday, work_days: 1), 'Tuesday should be the business day following Monday')
     assert_equal(monday + 4, t_chore.add_business_days(start_date: monday, work_days: 4), 'Friday should be four business days after Monday')
     assert_equal(monday + 7, t_chore.add_business_days(start_date: monday, work_days: 5), 'Monday should be five business days after Monday')
-    assert_equal(monday + 7, t_chore.add_business_days(start_date: monday + 4, work_days: 1), 'Monday should be one business days after Friday')
+    assert_equal(monday + 7, t_chore.add_business_days(start_date: monday + 4, work_days: 1), 'Monday should be one business day after Friday')
+    assert_equal(monday + 7, t_chore.add_business_days(start_date: monday + 5, work_days: 1), 'Monday should be one business day after Saturday')
+    assert_equal(monday + 7, t_chore.add_business_days(start_date: monday + 6, work_days: 1), 'Monday should be one business day after Sunday')
+    assert_equal(monday + 7, t_chore.add_business_days(start_date: monday + 1, work_days: 4), 'Monday should be four business days after Tuesday')
+    assert_equal(monday + (52 * 7), t_chore.add_business_days(start_date: monday, work_days: (52 * 5)), '52 weeks from a Monday should be the same Monday')
+    assert_not_equal(monday + 5, t_chore.add_business_days(start_date: monday, work_days: 5), 'Saturday is not a business day')
+    assert_not_equal(monday + 6, t_chore.add_business_days(start_date: monday, work_days: 6), 'Sunday is not a business day')
+  end
+  test 'add_business_days should only accept a positive number of work_days' do
     assert_raises(ArgumentError) do
       t_chore.add_business_days(start_date: monday, work_days: -1)
+    end
+    assert_raises(ArgumentError) do
+      t_chore.add_business_days(start_date: monday, work_days: 0)
     end
   end
 
