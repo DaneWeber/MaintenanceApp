@@ -43,9 +43,6 @@ GEM
     arel (8.0.0)
     bindex (0.5.0)
     builder (3.2.3)
-    business_time (0.9.2)
-      activesupport (>= 3.2.0)
-      tzinfo
     byebug (9.0.6)
     capybara (2.14.3)
       addressable
@@ -178,7 +175,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  business_time
   byebug
   capybara (~> 2.13)
   coffee-rails (~> 4.2)
