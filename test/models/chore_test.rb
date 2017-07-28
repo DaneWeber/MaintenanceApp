@@ -11,6 +11,10 @@ class ChoreTest < ActiveSupport::TestCase
   # Act
 
   # Assert
+  # HACK: remove the over-kill tests of the future and past. Get it down to one positive and one negative.
+  # HACK: group negative tests with the positive ones.
+  # HACK: add negative tests where a given result is NOT returned when some other input is provided.
+
   test 'due_class nil condition' do
     assert_equal('not-due', test_chore.due_class(nil), 'A blank due_date should be not-due')
   end
