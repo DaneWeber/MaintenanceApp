@@ -1,5 +1,5 @@
 class Chore < ApplicationRecord
-  enum interval_type: { calendar_days: 0, business_days: 1 }
+  enum interval_type: { calendar_days: 0, business_days: 1 }, _suffix: true
 
   validates :name, presence: true
   validates :interval_days, numericality: { only_integer: true, greater_than: 0 }
@@ -13,9 +13,9 @@ class Chore < ApplicationRecord
   # Functions
   def calculate_next_due
     case
-    when calendar_days?
+    when calendar_days_interval_type?
       Date.today + self.interval_days
-    when business_days?
+    when business_days_interval_type?
       self.add_business_days(start_date: Date.today, work_days: self.interval_days)
     end
   end

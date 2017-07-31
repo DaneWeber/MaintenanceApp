@@ -112,7 +112,7 @@ class ChoreTest < ActiveSupport::TestCase
 
   test 'five calendar day interval' do
     cal_chore = Chore.new(interval_days: 5)
-    assert(cal_chore.calendar_days?, 'Default is calendar_days')
+    assert(cal_chore.calendar_days_interval_type?, 'Default is calendar_days')
     assert_equal(5, cal_chore.interval_days, 'Five day interval')
     assert_nil(cal_chore.last_done, 'Unset last done')
     assert_nil(cal_chore.cycle_reset, 'Unset cycle date')
@@ -126,7 +126,7 @@ class ChoreTest < ActiveSupport::TestCase
 
   test 'five business day interval' do
     bus_chore = Chore.new(interval_days: 5, interval_type: 'business_days')
-    assert(bus_chore.business_days?, 'Explicitly set to business days')
+    assert(bus_chore.business_days_interval_type?, 'Explicitly set to business days')
     assert_equal(5, bus_chore.interval_days, 'Five day interval')
     assert_nil(bus_chore.last_done, 'Unset last done')
     assert_nil(bus_chore.cycle_reset, 'Unset cycle date')
