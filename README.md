@@ -1,24 +1,40 @@
-# README
+# Maintenance App
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+For the tasks that are never done.
 
-Things you may want to cover:
+## Quick Start
 
-* Ruby version
+- Ruby
+- Rails
+- SQLite3
 
-* System dependencies
+## Vision
 
-* Configuration
+**Offload the mental burden of tracking the things you care about doing infrequently.**
 
-* Database creation
+_Not one-off tasks. Not for good intentions or habits you wish you had._
 
-* Database initialization
+## Roadmap
 
-* How to run the test suite
+_Unordered_
 
-* Services (job queues, cache servers, search engines, etc.)
+- Accessible everywhere
+    - Web-accessible
+    - Mobile-accessible
+    - Offline-accessible
+    - User-hosted
+- Complex date logic
+    - ~Calendar days~
+    - ~Business days~
+    - Holidays
+    - Weekday
+    - Monthly
+    - Business day offset (e.g. last business day of the month)
+    - Unusual work-weeks (not M-F)
+    - Multiple criteria (two days before the last non-holiday Friday of the month)
+- Activity logging
+- Undo changes (bi-temporal database)
+- Adaptive schedule (log 5,000 mile oil changes and set the due date based on history)
+- Notes integration (so that instructions or lessons-learned can be associated with the chore)
 
-* Deployment instructions
-
-* ...
+**Hypothesis:** This should be a one-page JavaScript app that stores data in Dropbox.
