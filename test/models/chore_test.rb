@@ -1,10 +1,6 @@
 require 'test_helper'
 
 class ChoreTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
-
   # Arrange
   t_chore = Chore.new
   monday = Date.parse('2017-06-12')
