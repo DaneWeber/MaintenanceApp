@@ -37,7 +37,7 @@ class ChoresController < ApplicationController
 
   def reset_cycle
     @chore = Chore.find(params[:id])
-    @chore.reset_cycle_date
+    @chore.reset_cycle_date             # TODO how should I catch failures here?
     @chore.save if @chore.persisted?
 
     redirect_to chores_path

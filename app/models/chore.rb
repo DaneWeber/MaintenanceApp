@@ -17,6 +17,8 @@ class Chore < ApplicationRecord
       Date.today + self.interval_days
     when business_days_interval_type?
       self.add_business_days(start_date: Date.today, work_days: self.interval_days)
+    else
+      raise ArgumentError, 'calculation logic missing for this interval_type'
     end
   end
 
