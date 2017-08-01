@@ -141,9 +141,9 @@ class ChoreTest < ActiveSupport::TestCase
   test 'all interval types are handled' do
     it_chore = Chore.new(interval_days: 20)
 
-     Chore.interval_types.keys.each do |type|
-       it_chore.interval_type = type
-       assert(it_chore.reset_cycle_date, 'Each interval_type should be handled')
-     end
+    Chore.interval_types.keys.each do |type|
+      it_chore.interval_type = type
+      assert(it_chore.reset_cycle_date, 'Each interval_type should be handled')
+    end
   end
 end
