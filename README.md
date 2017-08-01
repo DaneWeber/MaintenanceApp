@@ -38,5 +38,8 @@ _Unordered_
 - Undo changes (bi-temporal database)
 - Adaptive schedule (log 5,000 mile oil changes and set the due date based on history)
 - Notes integration (so that instructions or lessons-learned can be associated with the chore)
+- Calendar integration (see due dates on your calendar)
+- Task checklists for a chore
+- Shared and team chores
 
 **Hypothesis:** This should be a one-page JavaScript app that stores data in Dropbox.
