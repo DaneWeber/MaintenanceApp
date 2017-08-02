@@ -40,8 +40,12 @@ class Chore < ApplicationRecord
   end
 
   def add_business_days(start_date:, work_days:)
-    raise ArgumentError, 'start_date must be a Date' unless start_date.instance_of?(Date)
-    raise ArgumentError, 'work_days must be a positive integer' unless work_days.is_a?(Integer) && work_days > 0
+    start_date = start_date.to_date
+    work_days = work_days.abs.to_i
+    if work_days == 0
+      start_date -= 1
+      work_days = 1
+    end
     start_date += 1 if start_date.wday == 6
     weeks, days = work_days.divmod(5)
     days += 2 if start_date.wday + days > 5
