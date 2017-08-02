@@ -29,6 +29,11 @@
   </p>
 
   <p>
+    <%= f.label :interval_type %><br>
+    <%= f.select :interval_type, Chore.interval_types.keys.map {|type| [type.titleize,type]} %>
+  </p>
+
+  <p>
     <%= f.submit %>
   </p>
 <% end %>

@@ -37,9 +37,9 @@ class ChoresController < ApplicationController
 
   def reset_cycle
     @chore = Chore.find(params[:id])
-    @chore.update!({last_done: Date.today,
-                    next_due: Date.today + @chore.interval_days,
-                    cycle_reset: Time.now})
+    @chore.reset_cycle_date             # TODO how should I catch failures here?
+    @chore.save if @chore.persisted?
+
     redirect_to chores_path
   end
 
@@ -52,6 +52,6 @@ class ChoresController < ApplicationController
 
   private
     def chore_params
-      params.require(:chore).permit(:name, :instructions, :interval_days)
+      params.require(:chore).permit(:name, :instructions, :interval_days, :interval_type)
     end
 end
