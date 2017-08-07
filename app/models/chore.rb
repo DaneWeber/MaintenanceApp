@@ -1,3 +1,8 @@
+SATURDAY = 6
+WORK_WEEK = 5
+CALENDAR_WEEK = 7
+WEEKEND = 2
+
 class Chore < ApplicationRecord
   enum interval_type: { calendar_days: 0, business_days: 1 }, _suffix: true
 
@@ -40,12 +45,18 @@ class Chore < ApplicationRecord
   end
 
   def add_business_days(start_date:, work_days:)
-    raise ArgumentError, 'start_date must be a Date' unless start_date.instance_of?(Date)
-    raise ArgumentError, 'work_days must be a positive integer' unless work_days.is_a?(Integer) && work_days > 0
-    start_date += 1 if start_date.wday == 6
-    weeks, days = work_days.divmod(5)
-    days += 2 if start_date.wday + days > 5
-    cal_days = days + weeks * 7
-    start_date + cal_days
+    start_date, work_days = date_and_natural_number(date: start_date, number: work_days)
+    return add_business_days(start_date: start_date - 1, work_days: 1) if work_days == 0
+    return add_business_days(start_date: start_date + 1, work_days: work_days) if start_date.wday == SATURDAY
+
+    weeks, remainder_days = work_days.divmod(WORK_WEEK)
+    calendar_days = remainder_days + (start_date.wday + remainder_days > WORK_WEEK ? WEEKEND : 0)
+    delta_days = calendar_days + weeks * CALENDAR_WEEK
+
+    start_date + delta_days
+  end
+
+  def date_and_natural_number(date:, number:)
+    [(date.to_date),(number.abs.to_i)]
   end
 end

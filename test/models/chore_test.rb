@@ -1,32 +1,39 @@
 require 'test_helper'
+MONDAY_2017_06_12 = Date.parse('2017-06-12')
 
 class ChoreTest < ActiveSupport::TestCase
   # Arrange
   test_chore = Chore.new
-  monday_2017_06_12 = Date.parse('2017-06-12')
 
   # Act
 
   # Assert
   test 'add_business_days' do
-    assert_equal(monday_2017_06_12 + 1, test_chore.add_business_days(start_date: monday_2017_06_12, work_days: 1), 'Tuesday should be the business day following Monday')
-    assert_equal(monday_2017_06_12 + 4, test_chore.add_business_days(start_date: monday_2017_06_12, work_days: 4), 'Friday should be four business days after Monday')
-    assert_equal(monday_2017_06_12 + 7, test_chore.add_business_days(start_date: monday_2017_06_12, work_days: 5), 'Five business days after Monday should be the following Monday')
-    assert_equal(monday_2017_06_12 + 7, test_chore.add_business_days(start_date: monday_2017_06_12 + 4, work_days: 1), 'Monday should be one business day after Friday')
-    assert_equal(monday_2017_06_12 + 7, test_chore.add_business_days(start_date: monday_2017_06_12 + 5, work_days: 1), 'Monday should be one business day after Saturday')
-    assert_equal(monday_2017_06_12 + 7, test_chore.add_business_days(start_date: monday_2017_06_12 + 6, work_days: 1), 'Monday should be one business day after Sunday')
-    assert_equal(monday_2017_06_12 + 7, test_chore.add_business_days(start_date: monday_2017_06_12 + 1, work_days: 4), 'Monday should be four business days after Tuesday')
-    assert_equal(monday_2017_06_12 + (52 * 7), test_chore.add_business_days(start_date: monday_2017_06_12, work_days: (52 * 5)), '52 weeks should be the same as calendar or busesiness days')
-    assert_not_equal(monday_2017_06_12 + 5, test_chore.add_business_days(start_date: monday_2017_06_12, work_days: 5), 'Saturday is not a business day')
-    assert_not_equal(monday_2017_06_12 + 6, test_chore.add_business_days(start_date: monday_2017_06_12, work_days: 6), 'Sunday is not a business day')
+    assert_equal(MONDAY_2017_06_12 + 1, test_chore.add_business_days(start_date: MONDAY_2017_06_12, work_days: 1), 'Tuesday should be the business day following Monday')
+    assert_equal(MONDAY_2017_06_12 + 4, test_chore.add_business_days(start_date: MONDAY_2017_06_12, work_days: 4), 'Friday should be four business days after Monday')
+    assert_equal(MONDAY_2017_06_12 + 7, test_chore.add_business_days(start_date: MONDAY_2017_06_12, work_days: 5), 'Five business days after Monday should be the following Monday')
+    assert_equal(MONDAY_2017_06_12 + 7, test_chore.add_business_days(start_date: MONDAY_2017_06_12 + 4, work_days: 1), 'Monday should be one business day after Friday')
+    assert_equal(MONDAY_2017_06_12 + 7, test_chore.add_business_days(start_date: MONDAY_2017_06_12 + 5, work_days: 1), 'Monday should be one business day after Saturday')
+    assert_equal(MONDAY_2017_06_12 + 7, test_chore.add_business_days(start_date: MONDAY_2017_06_12 + 6, work_days: 1), 'Monday should be one business day after Sunday')
+    assert_equal(MONDAY_2017_06_12 + 7, test_chore.add_business_days(start_date: MONDAY_2017_06_12 + 1, work_days: 4), 'Monday should be four business days after Tuesday')
+    assert_equal(MONDAY_2017_06_12 + (52 * 7), test_chore.add_business_days(start_date: MONDAY_2017_06_12, work_days: (52 * 5)), '52 weeks should be the same as calendar or busesiness days')
+    assert_not_equal(MONDAY_2017_06_12 + 5, test_chore.add_business_days(start_date: MONDAY_2017_06_12, work_days: 5), 'Saturday is not a business day')
+    assert_not_equal(MONDAY_2017_06_12 + 6, test_chore.add_business_days(start_date: MONDAY_2017_06_12, work_days: 6), 'Sunday is not a business day')
   end
-  test 'add_business_days should only accept a positive number of work_days' do
-    assert_raises(ArgumentError) do
-      test_chore.add_business_days(start_date: monday_2017_06_12, work_days: -1)
-    end
-    assert_raises(ArgumentError) do
-      test_chore.add_business_days(start_date: monday_2017_06_12, work_days: 0)
-    end
+  test 'add_business_days translates negative numbers into positive' do
+    assert_equal(MONDAY_2017_06_12 + 1, test_chore.add_business_days(start_date: MONDAY_2017_06_12, work_days: -1), 'Negative one is the same as positive one day for add_business_days')
+    assert_equal(MONDAY_2017_06_12 + 15, test_chore.add_business_days(start_date: MONDAY_2017_06_12, work_days: -11), 'Negative eleven business days is two weeks and a day in the future')
+  end
+  test 'add_business_days translates zero into one' do
+    assert_equal(MONDAY_2017_06_12, test_chore.add_business_days(start_date: MONDAY_2017_06_12, work_days: 0), 'Zero returns the next business day from one calendar day ago')
+    assert_equal(MONDAY_2017_06_12 + 7, test_chore.add_business_days(start_date: MONDAY_2017_06_12 + 5, work_days: 0), 'Zero returns the next business day from one calendar day ago')
+  end
+  test 'add_business_days ignores fractional parts of work_days' do
+    assert_equal(MONDAY_2017_06_12 + 7, test_chore.add_business_days(start_date: MONDAY_2017_06_12, work_days: -5.98765), 'decimals should be truncated after taking the absolue value')
+  end
+  test 'add_business_days translates Time and DateTime into Date' do
+    assert_equal(MONDAY_2017_06_12 + 1, test_chore.add_business_days(start_date: Time.parse('June 12 01:03 +1100 2017'), work_days: 1), 'Time should be converted to the local Date')
+    assert_equal(MONDAY_2017_06_12 + 1, test_chore.add_business_days(start_date: DateTime.parse('June 12 01:03 +1100 2017'), work_days: 1), 'DateTime should be converted to the local Date')
   end
 
   # HACK: remove the over-kill tests of the future and past. Get it down to one positive and one negative.
