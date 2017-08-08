@@ -13,5 +13,8 @@ class OpenWeatherMapIntTest < ActionDispatch::IntegrationTest
     test_api = OpenWeatherMap.new(response: 'empty')
     assert(OpenWeatherMap.safe_to_poll(DateTime.now), 'fixtures should be safely in the past')
     assert_equal(stub_body_text, test_api.current_weather_payload, 'should call the API')
+    second_test_api = OpenWeatherMap.new(response: 'second')
+    assert_not(OpenWeatherMap.safe_to_poll(DateTime.now), 'just made a successful call')
+    assert_equal(stub_body_text, second_test_api.current_weather_payload, 'should retrieve the cache')
   end
 end
