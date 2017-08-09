@@ -40,7 +40,6 @@ class OpenWeatherMap < ApplicationRecord
   end
 
   def self.safe_to_poll(check_time)
-    return true if check_time > OpenWeatherMap.latest_get + COOLDOWN_IN_MINUTES.minutes
-    false
+    check_time > OpenWeatherMap.latest_get + COOLDOWN_IN_MINUTES.minutes ? true : false
   end
 end
