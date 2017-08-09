@@ -1,9 +1,8 @@
 COOLDOWN_IN_MINUTES = 10
-OPEN_WEATHER_MAP_URI = 'http://api.openweathermap.org/'
-OPEN_WEATHER_MAP_PATH = 'data/2.5/forecast/daily'
+OPEN_WEATHER_MAP_PATH = 'http://api.openweathermap.org/data/2.5/forecast/daily?'
 OPEN_WEATHER_MAP_CRITERIA = 'zip=22630,us'
 OPEN_WEATHER_MAP_KEY = '3fcb4e23443750cc1256f3016a160ca7'
-OPEN_WEATHER_MAP_FULL_URL = OPEN_WEATHER_MAP_URI + OPEN_WEATHER_MAP_PATH + '?' + OPEN_WEATHER_MAP_CRITERIA + '&appid=' + OPEN_WEATHER_MAP_KEY
+OPEN_WEATHER_MAP_FULL_URL = OPEN_WEATHER_MAP_PATH + OPEN_WEATHER_MAP_CRITERIA + '&appid=' + OPEN_WEATHER_MAP_KEY
 
 class OpenWeatherMap < ApplicationRecord
   validates :last_get, presence: true
