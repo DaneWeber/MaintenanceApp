@@ -5,7 +5,7 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 
 # use secrets.yml for API keys
-# config/secrets.yml
+config/secrets.yml
 
 # Ignore bundler config.
 /.bundle
