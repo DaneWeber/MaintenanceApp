@@ -8,11 +8,7 @@ class OpenWeatherMap < ApplicationRecord
   validates :last_get, presence: true
 
   def current_weather_payload
-    if OpenWeatherMap.safe_to_poll(DateTime.now)
-      self.get_weather
-    else
-      self.retrieve_cache
-    end
+    OpenWeatherMap.safe_to_poll(DateTime.now) ? self.get_weather : self.retrieve_cache
     self.response
   end
 
@@ -20,7 +16,6 @@ class OpenWeatherMap < ApplicationRecord
     api_response = HTTParty.get(OPEN_WEATHER_MAP_FULL_URL)
     if api_response.success?
       self.response = api_response.body
-      self.api_key = OPEN_WEATHER_MAP_KEY
       self.criteria = OPEN_WEATHER_MAP_CRITERIA
       self.last_get = DateTime.now
       self.save
@@ -30,7 +25,6 @@ class OpenWeatherMap < ApplicationRecord
   def retrieve_cache
     cached = OpenWeatherMap.order(:last_get).last
     self.response = cached.response
-    self.api_key = cached.api_key
     self.criteria = cached.criteria
     self.last_get = cached.last_get
   end
