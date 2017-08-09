@@ -1,7 +1,7 @@
 COOLDOWN_IN_MINUTES = 10.freeze
 OPEN_WEATHER_MAP_PATH = 'http://api.openweathermap.org/data/2.5/forecast/daily?'.freeze
 OPEN_WEATHER_MAP_CRITERIA = 'zip=22630,us'.freeze
-OPEN_WEATHER_MAP_KEY = '3fcb4e23443750cc1256f3016a160ca7'.freeze
+OPEN_WEATHER_MAP_KEY = Rails.application.secrets.open_weather_map_key.freeze
 OPEN_WEATHER_MAP_FULL_URL = OPEN_WEATHER_MAP_PATH + OPEN_WEATHER_MAP_CRITERIA + '&appid=' + OPEN_WEATHER_MAP_KEY
 OPEN_WEATHER_MAP_FULL_URL.freeze
 
