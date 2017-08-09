@@ -1,5 +1,5 @@
-OPEN_WEATHER_MAP_STUB = /api.openweathermap.org/
-OPEN_WEATHER_MAP_TEST = 'http://api.openweathermap.org/'
+OPEN_WEATHER_MAP_STUB = /api.openweathermap.org/.freeze
+OPEN_WEATHER_MAP_TEST = 'http://api.openweathermap.org/.freeze'
 
 require 'test_helper'
 require 'webmock/minitest'

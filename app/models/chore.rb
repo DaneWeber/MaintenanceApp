@@ -1,7 +1,7 @@
-SATURDAY = 6
-WORK_WEEK = 5
-CALENDAR_WEEK = 7
-WEEKEND = 2
+SATURDAY = 6.freeze
+WORK_WEEK = 5.freeze
+CALENDAR_WEEK = 7.freeze
+WEEKEND = 2.freeze
 
 class Chore < ApplicationRecord
   enum interval_type: { calendar_days: 0, business_days: 1 }, _suffix: true
