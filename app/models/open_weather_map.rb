@@ -37,4 +37,9 @@ class OpenWeatherMap < ApplicationRecord
   def self.safe_to_poll(check_time)
     check_time > OpenWeatherMap.latest_get + COOLDOWN_IN_MINUTES.minutes ? true : false
   end
+
+  # Utility
+  def self.fahrenheit_from_kelvin(kelvin)
+    kelvin * 9 / 5 - 459.67
+  end
 end
