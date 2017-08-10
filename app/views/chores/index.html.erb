@@ -33,7 +33,25 @@
     </tr>
   <% end %>
 
-  <p>
-  <%= @weather.current_weather_payload %>
-  </p>
 </table>
+
+<div id="forecast">
+<h2>
+  <%= @weather['city']['name'] %>
+</h2>
+<% @weather['list'].each do |day| %>
+  <p>
+    <!-- The API responded with an icon of '04dd' instead of '04d' -->
+    <%= image_tag('http://openweathermap.org/img/w/' + day['weather'][0]['icon'].gsub(/dd/, 'd') + '.png', alt: day['weather'][0]['description']) %>
+    <em>Date:</em> <%= Time.at(day['dt']).to_date %> -
+    <em>Weather:</em>
+    <% day['weather'].each do |weather| %>
+      <%= weather['main'] %>
+    <% end %>
+    -
+    <!-- # TODO: convert from Kelvin -->
+    <em>High:</em> <%= day['temp']['max'] %> -
+    <em>Low:</em> <%= day['temp']['min'] %> -
+  </p>
+<% end %>
+</div>

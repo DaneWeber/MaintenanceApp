@@ -1,7 +1,7 @@
 class ChoresController < ApplicationController
   def index
     @chores = Chore.all.order(next_due: :asc, cycle_reset: :asc)
-    @weather = OpenWeatherMap.new
+    @weather = JSON.parse OpenWeatherMap.new.current_weather_payload
   end
 
   def show
