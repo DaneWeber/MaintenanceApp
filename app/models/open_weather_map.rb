@@ -9,11 +9,11 @@ class OpenWeatherMap < ApplicationRecord
   validates :last_get, presence: true
 
   def refresh
-    current_weather_payload
+    OpenWeatherMap.safe_to_poll(DateTime.now) ? self.get_weather : self.retrieve_cache
   end
 
   def current_weather_payload
-    OpenWeatherMap.safe_to_poll(DateTime.now) ? self.get_weather : self.retrieve_cache
+    self.refresh
     response
   end
 
