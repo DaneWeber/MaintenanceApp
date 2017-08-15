@@ -31,7 +31,7 @@ class OpenWeatherMap < ApplicationRecord
   end
 
   def self.latest_get
-    @@latest_get = OpenWeatherMap.maximum(:last_get)
+    OpenWeatherMap.maximum(:last_get)
   end
 
   def self.safe_to_poll(check_time)

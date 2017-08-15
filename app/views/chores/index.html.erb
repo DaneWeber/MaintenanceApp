@@ -49,7 +49,6 @@
       <%= weather['main'] %>
     <% end %>
     -
-    <!-- # TODO: convert from Kelvin -->
     <em>High:</em> <%= OpenWeatherMap.fahrenheit_from_kelvin(day['temp']['max']).round(1) %> -
     <em>Low:</em> <%= OpenWeatherMap.fahrenheit_from_kelvin(day['temp']['min']).round(1) %>
   </p>
