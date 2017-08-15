@@ -1,7 +1,7 @@
-SATURDAY = 6
-WORK_WEEK = 5
-CALENDAR_WEEK = 7
-WEEKEND = 2
+SATURDAY = 6.freeze
+WORK_WEEK = 5.freeze
+CALENDAR_WEEK = 7.freeze
+WEEKEND = 2.freeze
 
 class Chore < ApplicationRecord
   enum interval_type: { calendar_days: 0, business_days: 1 }, _suffix: true
@@ -45,6 +45,7 @@ class Chore < ApplicationRecord
   end
 
   def add_business_days(start_date:, work_days:)
+    # TODO kill the .to_date cleansing and instead do calendar_days.days, etc.
     start_date, work_days = date_and_natural_number(date: start_date, number: work_days)
     return add_business_days(start_date: start_date - 1, work_days: 1) if work_days == 0
     return add_business_days(start_date: start_date + 1, work_days: work_days) if start_date.wday == SATURDAY
@@ -57,6 +58,7 @@ class Chore < ApplicationRecord
   end
 
   def date_and_natural_number(date:, number:)
+    # TODO kill the .to_date cleansing and instead do calendar_days.days, etc.
     [(date.to_date),(number.abs.to_i)]
   end
 end

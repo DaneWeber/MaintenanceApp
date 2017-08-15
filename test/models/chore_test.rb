@@ -1,5 +1,5 @@
 require 'test_helper'
-MONDAY_2017_06_12 = Date.parse('2017-06-12')
+MONDAY_2017_06_12 = Date.parse('2017-06-12').freeze
 
 class ChoreTest < ActiveSupport::TestCase
   # Arrange

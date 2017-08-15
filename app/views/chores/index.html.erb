@@ -32,4 +32,25 @@
                                 data: { confirm: "Do you want to delete the chore \"#{chore.name}\"?" } %></td>
     </tr>
   <% end %>
+
 </table>
+
+<div id="forecast">
+<h2>
+  <%= @weather['city']['name'] %>
+</h2>
+<% @weather['list'].each do |day| %>
+  <p>
+    <!-- The API responded with an icon of '04dd' instead of '04d' -->
+    <%= image_tag('http://openweathermap.org/img/w/' + day['weather'][0]['icon'].gsub(/dd/, 'd') + '.png', alt: day['weather'][0]['description']) %>
+    <em>Date:</em> <%= Time.at(day['dt']).to_date %> -
+    <em>Weather:</em>
+    <% day['weather'].each do |weather| %>
+      <%= weather['main'] %>
+    <% end %>
+    -
+    <em>High:</em> <%= OpenWeatherMap.fahrenheit_from_kelvin(day['temp']['max']).round(1) %> -
+    <em>Low:</em> <%= OpenWeatherMap.fahrenheit_from_kelvin(day['temp']['min']).round(1) %>
+  </p>
+<% end %>
+</div>

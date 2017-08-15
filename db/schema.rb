@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170727181612) do
+ActiveRecord::Schema.define(version: 20170809171313) do
 
   create_table "chores", force: :cascade do |t|
     t.string "name"
@@ -24,6 +24,14 @@ ActiveRecord::Schema.define(version: 20170727181612) do
     t.integer "interval_type", default: 0
     t.index ["cycle_reset"], name: "index_chores_on_cycle_reset"
     t.index ["next_due"], name: "index_chores_on_next_due"
+  end
+
+  create_table "open_weather_maps", force: :cascade do |t|
+    t.datetime "last_get"
+    t.text "response"
+    t.string "criteria"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
