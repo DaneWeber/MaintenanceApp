@@ -1,6 +1,16 @@
+FUTURE_WEATHER_FORECAST_DAYS = 15
+
 class ChoresController < ApplicationController
   def index
     @chores = Chore.all.order(next_due: :asc, cycle_reset: :asc)
+    @not_due, @today = @chores.partition { |x| x.next_due.nil? }
+    @today, @future = @today.partition { |x| x.next_due <= Date.today }
+    @future, @forecast = @future.partition { |x| x.next_due > Date.today + FUTURE_WEATHER_FORECAST_DAYS }
+    @forecast = @forecast.group_by { |x| x.next_due }
+    @gaps = @forecast.keys.zip((@forecast.keys << Date.today).sort.each_cons(2).map { |a,b| (b - a).to_i })
+    @forecast_remainder = ((Date.today + FUTURE_WEATHER_FORECAST_DAYS) - @gaps[-1][0]).to_i
+    @gaps = @gaps.to_h
+    # byebug
     @weather = JSON.parse OpenWeatherMap.new.current_weather_payload
   end
 

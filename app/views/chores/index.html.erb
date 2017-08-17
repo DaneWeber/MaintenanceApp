@@ -2,6 +2,56 @@
 
 <p><%= link_to 'Add Chore', new_chore_path %></p>
 
+<div id="chores_list">
+  <div class="day">
+    <%= render :partial => "chores-flexbox", :object => @not_due, :as => :chores %>
+    <div class="weather">
+      <div class="weather-date">
+        <div class="icon">
+          X
+        </div>
+        <div class="deets">
+          O
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="day">
+    <%= render :partial => "chores-flexbox", :object => @today, :as => :chores %>
+    <div class="weather">
+      <%= render :partial => "weather-flexbox", :locals => { :weather_date => 0 } %>
+    </div>
+  </div>
+
+
+  <% @forecast.each do |date, chores_for_date| %>
+  <div class="day">
+    <%= render :partial => "chores-flexbox", :object => chores_for_date, :as => :chores %>
+    <div class="weather">
+      <% (1..@gaps[date]).each do |leading_days| %>
+      <% weather_date = leading_days + (date - Date.today - @gaps[date]).to_i  %>
+        <%= render :partial => "weather-flexbox", :locals => { :weather_date => weather_date  } %>
+      <% end %>
+    </div>
+  </div>
+  <% end %>
+
+  <div class="day">
+    <%= render :partial => "chores-flexbox", :object => @future, :as => :chores %>
+    <% # TODO refactor the date logic so that we can move the div.weather into the partial %>
+    <div class="weather">
+      <% (1..@forecast_remainder).each do |remainder| %>
+        <% weather_date = FUTURE_WEATHER_FORECAST_DAYS - @forecast_remainder + remainder %>
+        <%= render :partial => "weather-flexbox", :locals => { :weather_date => weather_date  } %>
+      <% end %>
+    </div>
+  </div>
+
+
+
+
 <table>
   <tr>
     <th>Chore</th>
@@ -37,7 +87,7 @@
 
 <div id="forecast">
 <h2>
-  <%= @weather['city']['name'] %>
+  <%= @weather['city']['name'] %> weather
 </h2>
 <% @weather['list'].each do |day| %>
   <p>
@@ -53,4 +103,5 @@
     <em>Low:</em> <%= OpenWeatherMap.fahrenheit_from_kelvin(day['temp']['min']).round(1) %>
   </p>
 <% end %>
+</div>
 </div>

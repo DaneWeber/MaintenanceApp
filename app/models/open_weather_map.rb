@@ -8,9 +8,13 @@ OPEN_WEATHER_MAP_FULL_URL.freeze
 class OpenWeatherMap < ApplicationRecord
   validates :last_get, presence: true
 
-  def current_weather_payload
+  def refresh
     OpenWeatherMap.safe_to_poll(DateTime.now) ? self.get_weather : self.retrieve_cache
-    self.response
+  end
+
+  def current_weather_payload
+    self.refresh
+    response
   end
 
   def get_weather

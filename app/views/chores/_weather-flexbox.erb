@@ -1,0 +1,16 @@
+<div class="weather-date">
+  <% day = @weather['list'][weather_date] %>
+  <div class="icon">
+    <!-- The API responded with an icon of '04dd' instead of '04d' -->
+    <%= image_tag('http://openweathermap.org/img/w/' + day['weather'][0]['icon'].gsub(/dd/, 'd') + '.png', alt: day['weather'][0]['description']) %>
+  </div>
+  <div class="deets">
+    <p><em>Date:</em> <%= Time.at(day['dt']).to_date %></p>
+    <p><em>Weather:</em>
+    <% day['weather'].each do |weather| %>
+      <%= weather['main'] %>
+    <% end %></p>
+    <p><em>High:</em> <%= OpenWeatherMap.fahrenheit_from_kelvin(day['temp']['max']).round(1) %></p>
+    <p><em>Low:</em> <%= OpenWeatherMap.fahrenheit_from_kelvin(day['temp']['min']).round(1) %></p>
+  </div>
+</div>
