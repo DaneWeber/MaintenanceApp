@@ -2,6 +2,161 @@
 
 <p><%= link_to 'Add Chore', new_chore_path %></p>
 
+<div id="chores_list">
+  <div class="day">
+    <div class="chores">
+      <% @today.each do |chore| %>
+      <p>
+        <strong>
+          <%= link_to 'Cycle', reset_cycle_chore_path(chore), method: "patch" %>
+        </strong>
+        <strong class="chore_name">
+          --
+          <%= chore.name %>
+          by
+          <%= chore.next_due %>
+        </strong>
+        <br />
+        (<%= chore.interval_days %>
+        <%= chore.interval_type.titleize %> interval)
+        <%= chore.instructions %>
+        <br />
+        <%= link_to 'Show', chore_path(chore) %>
+        <%= link_to 'Edit', edit_chore_path(chore) %>
+        <%= link_to 'Delete', chore_path(chore),
+                                  method: :delete,
+                                  data: { confirm: "Do you want to delete the chore \"#{chore.name}\"?" } %>
+      </p>
+      <% end %>
+    </div>
+    <div class="weather">
+      <div class="weather-date">
+        <% day = @weather['list'][0] %>
+          <div class="icon">
+          <!-- The API responded with an icon of '04dd' instead of '04d' -->
+          <%= image_tag('http://openweathermap.org/img/w/' + day['weather'][0]['icon'].gsub(/dd/, 'd') + '.png', alt: day['weather'][0]['description']) %>
+        </div>
+          <div class="deets">
+            <p><em>Date:</em> <%= Time.at(day['dt']).to_date %></p>
+            <p><em>Weather:</em>
+            <% day['weather'].each do |weather| %>
+              <%= weather['main'] %>
+            <% end %></p>
+            <p><em>High:</em> <%= OpenWeatherMap.fahrenheit_from_kelvin(day['temp']['max']).round(1) %></p>
+            <p><em>Low:</em> <%= OpenWeatherMap.fahrenheit_from_kelvin(day['temp']['min']).round(1) %></p>
+          </div>
+        </div>
+    </div>
+  </div>
+
+
+  <% @forecast.each do |date, chores_for_date| %>
+  <div class="day">
+    <div class="chores">
+      <% chores_for_date.sort_by { |x| x.cycle_reset }.each do |chore| %>
+      <p>
+        <strong>
+          <%= link_to 'Cycle', reset_cycle_chore_path(chore), method: "patch" %>
+        </strong>
+        <strong class="chore_name">
+          --
+          <%= chore.name %>
+          by
+          <%= chore.next_due %>
+        </strong>
+        <br />
+        (<%= chore.interval_days %>
+        <%= chore.interval_type.titleize %> interval)
+        <%= chore.instructions %>
+        <br />
+        <%= link_to 'Show', chore_path(chore) %>
+        <%= link_to 'Edit', edit_chore_path(chore) %>
+        <%= link_to 'Delete', chore_path(chore),
+                                  method: :delete,
+                                  data: { confirm: "Do you want to delete the chore \"#{chore.name}\"?" } %>
+      </p>
+      <% end %>
+    </div>
+    <div class="weather">
+      <% (1..@gaps[date]).each do |leading_days| %>
+      <% weather_date = leading_days + (date - Date.today - @gaps[date]).to_i  %>
+      <div class="weather-date">
+        <% day = @weather['list'][weather_date] %>
+          <div class="icon">
+          <!-- The API responded with an icon of '04dd' instead of '04d' -->
+          <%= image_tag('http://openweathermap.org/img/w/' + day['weather'][0]['icon'].gsub(/dd/, 'd') + '.png', alt: day['weather'][0]['description']) %>
+        </div>
+          <div class="deets">
+            <p><em>Date:</em> <%= Time.at(day['dt']).to_date %></p>
+            <p><em>Weather:</em>
+            <% day['weather'].each do |weather| %>
+              <%= weather['main'] %>
+            <% end %></p>
+            <p><em>High:</em> <%= OpenWeatherMap.fahrenheit_from_kelvin(day['temp']['max']).round(1) %></p>
+            <p><em>Low:</em> <%= OpenWeatherMap.fahrenheit_from_kelvin(day['temp']['min']).round(1) %></p>
+          </div>
+        </div>
+        <% end %>
+    </div>
+  </div>
+
+
+
+
+  <% end %>
+
+  <div class="day">
+    <div class="chores">
+      <% @future.each do |chore| %>
+      <p>
+        <strong>
+          <%= link_to 'Cycle', reset_cycle_chore_path(chore), method: "patch" %>
+        </strong>
+        <strong class="chore_name">
+          --
+          <%= chore.name %>
+          by
+          <%= chore.next_due %>
+        </strong>
+        <br />
+        (<%= chore.interval_days %>
+        <%= chore.interval_type.titleize %> interval)
+        <%= chore.instructions %>
+        <br />
+        <%= link_to 'Show', chore_path(chore) %>
+        <%= link_to 'Edit', edit_chore_path(chore) %>
+        <%= link_to 'Delete', chore_path(chore),
+                                  method: :delete,
+                                  data: { confirm: "Do you want to delete the chore \"#{chore.name}\"?" } %>
+      </p>
+      <% end %>
+    </div>
+    <div class="weather">
+      <% (1..@forecast_remainder).each do |remainder| %>
+      <% weather_date = 15 - @forecast_remainder + remainder %>
+      <div class="weather-date">
+        <% day = @weather['list'][weather_date] %>
+          <div class="icon">
+          <!-- The API responded with an icon of '04dd' instead of '04d' -->
+          <%= image_tag('http://openweathermap.org/img/w/' + day['weather'][0]['icon'].gsub(/dd/, 'd') + '.png', alt: day['weather'][0]['description']) %>
+        </div>
+          <div class="deets">
+            <p><em>Date:</em> <%= Time.at(day['dt']).to_date %></p>
+            <p><em>Weather:</em>
+            <% day['weather'].each do |weather| %>
+              <%= weather['main'] %>
+            <% end %></p>
+            <p><em>High:</em> <%= OpenWeatherMap.fahrenheit_from_kelvin(day['temp']['max']).round(1) %></p>
+            <p><em>Low:</em> <%= OpenWeatherMap.fahrenheit_from_kelvin(day['temp']['min']).round(1) %></p>
+          </div>
+        </div>
+        <% end %>
+    </div>
+  </div>
+
+
+
+
 <table>
   <tr>
     <th>Chore</th>
@@ -37,7 +192,7 @@
 
 <div id="forecast">
 <h2>
-  <%= @weather['city']['name'] %>
+  <%= @weather['city']['name'] %> weather
 </h2>
 <% @weather['list'].each do |day| %>
   <p>
@@ -53,4 +208,5 @@
     <em>Low:</em> <%= OpenWeatherMap.fahrenheit_from_kelvin(day['temp']['min']).round(1) %>
   </p>
 <% end %>
+</div>
 </div>

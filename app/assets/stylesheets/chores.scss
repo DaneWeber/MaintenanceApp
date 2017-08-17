@@ -39,3 +39,59 @@ h1, th {
 .due-later {
   background-color: $gray;
 }
+
+// flexbox weather and chores alignment
+#chores_list {
+  p {
+    background: gray;
+    margin: 10px;
+    padding: 0px;
+  }
+
+  div {
+    background: red;
+    margin: 0px;
+    padding: 0px;
+  }
+
+  .day {
+    background: white;
+    margin: 50px;
+    padding: 5px;
+    display: flex;
+  }
+
+  .chores {
+    flex: 1 1 auto;
+    align-self: end;
+    background: green;
+  }
+
+  .weather {
+    background: blue;
+    flex: 0 0 0;
+  }
+
+  .chores p {
+    background: yellow;
+  }
+
+  .weather-date {
+    display: flex;
+    .icon {
+      flex: 0 0 50px;
+    }
+    .deets {
+      flex: 0 0 0;
+    }
+  }
+
+  .weather {
+    p {
+      white-space: nowrap;
+      margin: 0px;
+    }
+    img {
+    }
+  }
+}
