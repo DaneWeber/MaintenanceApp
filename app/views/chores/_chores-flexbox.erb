@@ -1,0 +1,26 @@
+<div class="chores">
+<% chores.sort_by { |x| [x.next_due, x.cycle_reset] }.each do |chore| %>
+
+<p>
+  <strong>
+    <%= link_to 'Cycle', reset_cycle_chore_path(chore), method: "patch" %>
+  </strong>
+  <strong class="chore_name">
+    --
+    <%= chore.name %>
+    by
+    <%= chore.next_due || '_____' %>
+  </strong>
+  <br />
+  (<%= chore.interval_days %>
+  <%= chore.interval_type.titleize %> interval)
+  <%= chore.instructions %>
+  <br />
+  <%= link_to 'Show', chore_path(chore) %>
+  <%= link_to 'Edit', edit_chore_path(chore) %>
+  <%= link_to 'Delete', chore_path(chore),
+                            method: :delete,
+                            data: { confirm: "Do you want to delete the chore \"#{chore.name}\"?" } %>
+</p>
+<% end %>
+</div>
